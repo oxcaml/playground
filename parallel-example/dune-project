@@ -1,0 +1,4 @@
+(lang dune 3.19)
+
+(package
+ (name parallel_example))

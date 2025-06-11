@@ -1,0 +1,15 @@
+{
+        "build": {
+                "dockerfile": "Dockerfile"
+        },
+        "name": "OxCaml Playground",
+        "customizations": {
+                "vscode": {
+                        "extensions": [
+                                "ocamllabs.ocaml-platform",
+                                "ms-vscode.cpptools",
+                                "eamodio.gitlens"
+                        ]
+                }
+        }
+}
