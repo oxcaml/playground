@@ -2,7 +2,7 @@
         // "build": {
         //         "dockerfile": "Dockerfile"
         // },
-        "image": "ghcr.io/oxcaml/playground:main@sha256:6d10fa7419881cec63d934956de1d662dbbf3d80bde47cc14a132506022db58c",
+        "image": "ghcr.io/oxcaml/playground:sha256-6d10fa7419881cec63d934956de1d662dbbf3d80bde47cc14a132506022db58c.sig",
         "name": "OxCaml Playground",
         "customizations": {
                 "vscode": {
