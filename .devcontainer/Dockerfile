@@ -1,17 +1,21 @@
 FROM mcr.microsoft.com/devcontainers/universal
 # FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
+RUN df -h
+
 RUN rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
 
-# RUN cd /root && \
-#         curl -L -o autoconf.tar.gz https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
-#         tar fxz autoconf.tar.gz && \
-#         cd autoconf-2.71 && \
-#         ./configure --prefix=/usr && \
-#         make && \
-#         make install && \
-#         cd .. && \
-#         rm -rf autoconf-2.71 autoconf.tar.gz
+RUN df -h
+
+RUN cd /root && \
+        curl -L -o autoconf.tar.gz https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
+        tar fxz autoconf.tar.gz && \
+        cd autoconf-2.71 && \
+        ./configure --prefix=/usr && \
+        make && \
+        make install && \
+        cd .. && \
+        rm -rf autoconf-2.71 autoconf.tar.gz
 
 ARG USERNAME=codespace
 ARG USER_UID=1000
@@ -24,6 +28,8 @@ RUN curl -L -o /usr/bin/opam https://github.com/ocaml/opam/releases/download/2.3
         apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
+RUN df -h
+
 USER ${USERNAME}
 
 # CR mshinwell/avsm: use a hash for --repos, but will need to restore the
@@ -35,5 +41,7 @@ RUN opam init -a --disable-sandboxing --yes --bare && \
         eval $(opam env --switch 5.2.0+ox) && \
         opam install --yes ocamlformat merlin ocaml-lsp-server utop && \
         opam install --yes parallel core_unix
+
+RUN df -h
 
 USER root
