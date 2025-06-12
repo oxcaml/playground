@@ -1,5 +1,7 @@
-# FROM mcr.microsoft.com/devcontainers/universal
-FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+FROM mcr.microsoft.com/devcontainers/universal
+# FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+
+RUN rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
 
 # RUN cd /root && \
 #         curl -L -o autoconf.tar.gz https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
