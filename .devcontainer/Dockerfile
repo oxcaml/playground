@@ -23,7 +23,7 @@ RUN curl -L -o /usr/bin/opam https://github.com/ocaml/opam/releases/download/2.3
 
 USER ${USERNAME}
 
-RUN opam init -a --disable-sandboxing --yes && \
+RUN opam init -a --disable-sandboxing --yes --bare && \
         opam switch create 5.2.0+flambda2 --yes \
         --repos "with-extensions=git+https://github.com/janestreet/opam-repository.git#with-extensions,default" && \
         eval $(opam env --switch 5.2.0+flambda2) && \
