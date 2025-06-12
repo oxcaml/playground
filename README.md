@@ -16,4 +16,4 @@ $ ../_build/default/filter/filter.exe
 $ mogrify -format jpg filtered-ox.pgm
 ```
 
-Then you can open `filtered-ox.pgm` directly from the sidebar on the left.  Behold the *filtered ox*.
+Then you can open `filtered-ox.pgm` directly from the sidebar on the left (expand the `parallel-example` directory in the tree view).  Behold the *filtered ox*.
