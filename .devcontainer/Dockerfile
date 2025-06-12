@@ -24,10 +24,12 @@ RUN curl -L -o /usr/bin/opam https://github.com/ocaml/opam/releases/download/2.3
 
 USER ${USERNAME}
 
+# CR mshinwell/avsm: use a hash for --repos, but will need to restore the
+# URL afterwards for any user opam update commands.
 RUN opam init -a --disable-sandboxing --yes && \
-        opam switch create 5.2.0+flambda2 --yes \
+        opam switch create 5.2.0+ox --yes \
         --repos "with-extensions=git+https://github.com/janestreet/opam-repository.git#with-extensions,default" && \
-        eval $(opam env --switch 5.2.0+flambda2) && \
+        eval $(opam env --switch 5.2.0+ox) && \
         opam install --yes ocamlformat merlin ocaml-lsp-server utop && \
         opam install --yes parallel core_unix
 
