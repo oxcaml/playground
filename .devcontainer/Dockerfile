@@ -1,14 +1,15 @@
-FROM mcr.microsoft.com/devcontainers/universal
+# FROM mcr.microsoft.com/devcontainers/universal
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
-RUN cd /root && \
-        curl -L -o autoconf.tar.gz https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
-        tar fxz autoconf.tar.gz && \
-        cd autoconf-2.71 && \
-        ./configure --prefix=/usr && \
-        make && \
-        make install && \
-        cd .. && \
-        rm -rf autoconf-2.71 autoconf.tar.gz
+# RUN cd /root && \
+#         curl -L -o autoconf.tar.gz https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
+#         tar fxz autoconf.tar.gz && \
+#         cd autoconf-2.71 && \
+#         ./configure --prefix=/usr && \
+#         make && \
+#         make install && \
+#         cd .. && \
+#         rm -rf autoconf-2.71 autoconf.tar.gz
 
 ARG USERNAME=codespace
 ARG USER_UID=1000
