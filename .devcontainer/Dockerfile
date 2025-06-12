@@ -28,7 +28,8 @@ USER ${USERNAME}
 
 # CR mshinwell/avsm: use a hash for --repos, but will need to restore the
 # URL afterwards for any user opam update commands.
-RUN opam init -a --disable-sandboxing --yes && \
+RUN opam init -a --disable-sandboxing --yes --bare && \
+        opam update -a && \
         opam switch create 5.2.0+ox --yes \
         --repos "with-extensions=git+https://github.com/janestreet/opam-repository.git#with-extensions,default" && \
         eval $(opam env --switch 5.2.0+ox) && \
