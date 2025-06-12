@@ -5,6 +5,8 @@ RUN df -h
 
 RUN rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
 
+RUN du -sh /usr/*
+
 RUN df -h
 
 RUN cd /root && \
@@ -39,8 +41,12 @@ RUN opam init -a --disable-sandboxing --yes --bare && \
         opam switch create 5.2.0+ox --yes \
         --repos "with-extensions=git+https://github.com/janestreet/opam-repository.git#with-extensions,default" && \
         eval $(opam env --switch 5.2.0+ox) && \
-        opam install --yes ocamlformat merlin ocaml-lsp-server utop && \
-        opam install --yes parallel core_unix
+        opam install --yes ocamlformat && \
+        opam install --yes merlin && \
+        opam install --yes ocaml-lsp-server && \
+        opam install --yes utop && \
+        opam install --yes parallel && \
+        opam install --yes core_unix
 
 RUN df -h
 
