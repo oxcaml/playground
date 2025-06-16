@@ -5,8 +5,7 @@
         //"image": "ghcr.io/oxcaml/playground@sha256:6d10fa7419881cec63d934956de1d662dbbf3d80bde47cc14a132506022db58c",
         "name": "OxCaml Playground",
         "hostRequirements": {
-                "cpu": ">= 8",
-                "storage": ">= 64gb"
+                "storage": ">= 32gb"
         },
         "customizations": {
                 "vscode": {
