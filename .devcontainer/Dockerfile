@@ -3,14 +3,14 @@ FROM mcr.microsoft.com/devcontainers/universal
 
 RUN df -h
 
-RUN rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+RUN rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/php /usr/local/py-utils /usr/local/python /usr/local/rvm /opt/ghc /opt/hostedtoolcache/CodeQL /opt/conda /opt/dotnet
 
+RUN df -h
 RUN du -sh /usr/*
 RUN du -sh /usr/local/*
 RUN du -sh /opt/*
 RUN ls -l /
 
-RUN df -h
 
 RUN cd /root && \
         curl -L -o autoconf.tar.gz https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.gz && \
@@ -47,13 +47,25 @@ RUN opam init -a --disable-sandboxing --yes --bare && \
         opam update -a && \
         opam switch create 5.2.0+ox --yes \
         --repos "ox=git+https://github.com/oxcaml/opam-repository.git,default" && \
-        eval $(opam env --switch 5.2.0+ox) && \
-        opam install --yes ocamlformat && \
-        opam install --yes merlin && \
-        opam install --yes ocaml-lsp-server && \
-        opam install --yes utop && \
-        opam install --yes parallel && \
-        opam install --yes core_unix
+        eval $(opam env --switch 5.2.0+ox) 
+
+RUN df -h
+
+RUN eval $(opam env --switch 5.2.0+ox) && \
+        opam install --download-cache=false --keep-build-dir=false --yes ocamlformat && \
+        opam clean
+
+RUN df -h
+
+RUN eval $(opam env --switch 5.2.0+ox) && \        
+        opam install --download-cache=false --keep-build-dir=false --yes merlin && \
+        opam clean
+
+RUN df -h
+
+RUN eval $(opam env --switch 5.2.0+ox) && \          
+        opam install --download-cache=false --keep-build-dir=false --yes ocaml-lsp-server && \
+        opam clean
 
 RUN df -h
 
