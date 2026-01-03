@@ -47,7 +47,7 @@ module Parallel = struct
     if Slice.length slice > 1
     then (
       let pivot = partition slice in
-      let (), () =
+      let #((), ()) =
         Slice.fork_join2
           parallel
           ~pivot
@@ -59,10 +59,9 @@ module Parallel = struct
   ;;
 
   let quicksort ~scheduler ~mutex array =
-    let monitor = Parallel.Monitor.create_root () in
-    Parallel_scheduler_work_stealing.schedule scheduler ~monitor ~f:(fun parallel ->
-      Capsule.Mutex.with_lock mutex ~f:(fun password ->
-        Capsule.Data.iter array ~password ~f:(fun array ->
+    Parallel_scheduler.parallel scheduler ~f:(fun parallel ->
+      Mutex.with_lock mutex ~f:(fun password ->
+        Data.iter array ~password ~f:(fun array ->
           let array = Par_array.of_array array in
           quicksort parallel (Slice.slice array) [@nontail])
         [@nontail])
@@ -70,14 +69,14 @@ module Parallel = struct
   ;;
 
   let%bench_fun "parallel" =
-    let domains = Sys.getenv "DOMAINS" |> Option.bind ~f:Int.of_string_opt in
+    let max_domains = Sys.getenv "DOMAINS" |> Option.bind ~f:Int.of_string_opt in
     let scheduler =
-      (Parallel_scheduler_work_stealing.create [@alert "-experimental"]) ?domains ()
+      (Parallel_scheduler.create [@alert "-experimental"]) ?max_domains ()
     in
     let (P key) = Capsule.create () in
-    let mutex = Capsule.Mutex.create key in
+    let mutex = Mutex.create key in
     let array =
-      Capsule.Data.create (fun () -> Array.init 10_000 ~f:(fun _ -> Random.int 10_000))
+      Data.create (fun () -> Array.init 10_000 ~f:(fun _ -> Random.int 10_000))
     in
     fun () -> quicksort ~scheduler ~mutex array
   ;;

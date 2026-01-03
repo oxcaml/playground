@@ -17,12 +17,11 @@ let blur_at image ~x ~y =
 ;;
 
 let filter ~scheduler ~key image =
-  let monitor = Parallel.Monitor.create_root () in
-  Parallel_scheduler_work_stealing.schedule scheduler ~monitor ~f:(fun parallel ->
+  Parallel_scheduler.parallel scheduler ~f:(fun parallel ->
     let width = Image.width (Capsule.Data.project image) in
     let height = Image.height (Capsule.Data.project image) in
     let data =
-      Parallel_array.init parallel (width * height) ~f:(fun i ->
+      Parallel_array.init parallel (width * height) ~f:(fun _ i ->
         let x = i % width in
         let y = i / width in
         (Capsule.Key.access_shared key ~f:(fun access ->
@@ -37,10 +36,10 @@ let command =
     ~summary:"filter an image"
     [%map_open.Command
       let file = anon (maybe_with_default "ox.pgm" ("FILE" %: string))
-      and domains = flag "domains" (optional int) ~doc:"INT number of domains" in
+      and max_domains = flag "domains" (optional int) ~doc:"INT number of domains" in
       fun () ->
         let scheduler =
-          (Parallel_scheduler_work_stealing.create [@alert "-experimental"]) ?domains ()
+          (Parallel_scheduler.create [@alert "-experimental"]) ?max_domains ()
         in
         let (P key) = Capsule.create () in
         let image = Capsule.Data.create (fun () -> Image.load file) in
